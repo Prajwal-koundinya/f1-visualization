@@ -4,81 +4,202 @@ A Python application for visualizing Formula 1 race telemetry and replaying race
 
 ![Race Replay Preview](./resources/preview.png)
 
-## Features
+## 🎯 What Is This?
 
-- **Race Replay Visualization:** Watch the race unfold with real-time driver positions on a rendered track.
-- **Leaderboard:** See live driver positions and current tyre compounds.
-- **Lap & Time Display:** Track the current lap and total race time.
-- **Driver Status:** Drivers who retire or go out are marked as "OUT" on the leaderboard.
-- **Interactive Controls:** Pause, rewind, fast forward, and adjust playback speed using on-screen buttons or keyboard shortcuts.
-- **Legend:** On-screen legend explains all controls.
-- **Driver Telemetry Insights:** View speed, gear, DRS status, and current lap for selected drivers when selected on the leaderboard.
+F1 Race Replay transforms real Formula 1 telemetry data into an interactive race visualization. Think of it as your personal race director's screen - complete with live positions, tire strategies, and driver telemetry - but with magical powers to control time itself.
 
-## Controls
+### Why This Exists
 
-- **Pause/Resume:** SPACE or Pause button
-- **Rewind/Fast Forward:** ← / → or Rewind/Fast Forward buttons
-- **Playback Speed:** ↑ / ↓ or Speed button (cycles through 0.5x, 1x, 2x, 4x)
-- **Set Speed Directly:** Keys 1–4
+Because watching an F1 race once is never enough. Sometimes you need to:
+- 🔍 **Analyze** - Where exactly did Leclerc lose those 3 tenths?
+- 🎓 **Learn** - How do the best drivers take that corner?
+- 🎮 **Enjoy** - Experience the race from a completely new perspective
+- 📊 **Compare** - See two qualifying laps side-by-side with full telemetry
 
-## Qualifying Session Support (in development)
+## ✨ Features
 
-Recently added support for Qualifying session replays with telemetry visualization including speed, gear, throttle, and brake over the lap distance. This feature is still being refined.
+### 🎬 Time Control
+- **Pause & Resume** - Freeze the action at any moment
+- **Rewind** - Go back 5 seconds instantly
+- **Fast Forward** - Skip the boring parts
+- **Speed Control** - Watch at 0.5x, 1x, 2x, or 4x speed
 
-## Requirements
+### 📊 Live Data
+- **Real-time Leaderboard** - See positions update as the race unfolds
+- **Tire Compounds** - Visual indicators for SOFT/MEDIUM/HARD/WET
+- **Driver Status** - Know who's racing, pitting, or out
+- **Lap Counter** - Track progress through the race
 
-- Python 3.8+
-- [FastF1](https://github.com/theOehrly/Fast-F1)
-- [Arcade](https://api.arcade.academy/en/latest/)
-- numpy
+### 🔬 Telemetry Insights
+Click any driver to see:
+- 🚀 **Speed** - Real-time km/h
+- ⚙️ **Gear** - What gear they're in
+- 🎯 **Throttle** - 0-100% application
+- 💨 **DRS** - Open or closed
+- 🏁 **Current Lap** - Track their progress
 
-Install dependencies:
+### 🏁 Qualifying Mode
+- Compare up to 2 drivers side-by-side
+- Overlay telemetry traces:
+  - Speed through corners
+  - Throttle application
+  - Brake points
+  - Gear changes
+- Identify exactly where time is won and lost
+
+## 🖼️ Gallery
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  🏎️ F1 Race Replay - Monaco Grand Prix 2024                │
+├─────────────────────────────────────────────────────────────┤
+│                                                              │
+│         🏁 LAP 45/78          ⏱️ TIME: 01:23:45             │
+│                                                              │
+│    ┌──────────────────────────┐    ┌──────────────────┐    │
+│    │   🗺️ TRACK MAP          │    │  📊 LEADERBOARD  │    │
+│    │                          │    │                  │    │
+│    │      ●  ←─────┐         │    │  1. VER 🔴  L45  │    │
+│    │     ╱          │         │    │  2. HAM 🟡  L45  │    │
+│    │    ╱           ↓         │    │  3. LEC 🔴  L45  │    │
+│    │   ●            │         │    │  4. PER 🔴  L45  │    │
+│    │    ╲          ╱          │    │  5. SAI 🔴  L45  │    │
+│    │     ╲        ╱           │    │  ...             │    │
+│    │      └──────●            │    │                  │    │
+│    └──────────────────────────┘    └──────────────────┘    │
+│                                                              │
+│    ┌──────────────────────────────────────────────────┐    │
+│    │  📈 TELEMETRY - VER                              │    │
+│    │  Speed: 287 km/h  |  Gear: 7  |  DRS: OPEN      │    │
+│    └──────────────────────────────────────────────────┘    │
+│                                                              │
+│         [⏸️ PAUSE]  [⏪ REW]  [⏩ FWD]  [⚡ 2.0x]          │
+│                                                              │
+└─────────────────────────────────────────────────────────────┘
+```
+
+## 🚀 Quick Start
+
+### Prerequisites
+- Python 3.8 or higher
+- 2GB free disk space (for cache)
+- Decent internet connection (first run downloads telemetry)
+
+### Installation
+
 ```bash
+# Clone the repository
+git clone https://github.com/Prajwal-koundinya/f1-visualization.git
+cd f1-visualization
+
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install dependencies
 pip install -r requirements.txt
 ```
 
-FastF1 cache folder will be created automatically on first run. If it is not created, you can manually create a folder named `.fastf1-cache` in the project root.
+### Your First Replay
 
-## Usage
-
-Run the main script and specify the year and round:
 ```bash
-python main.py --year 2025 --round 12
+# List available races
+python main.py --year 2024 --list-rounds
+
+# Watch Monaco GP 2024
+python main.py --year 2024 --round 8
 ```
 
-To run a Sprint session (if the event has one), add `--sprint`:
+**First run takes 5-10 minutes** (downloads telemetry). After that? Lightning fast! ⚡
+
+## 🎮 Usage
+
+### Race Replays
+
 ```bash
-python main.py --year 2025 --round 12 --sprint
+# Basic race replay
+python main.py --year 2024 --round 12
+
+# Sprint race
+python main.py --year 2024 --round 11 --sprint
+
+# Force refresh data
+python main.py --year 2024 --round 8 --refresh-data
 ```
 
-The application will load a pre-computed telemetry dataset if you have run it before for the same event. To force re-computation of telemetry data, use the `--refresh-data` flag:
+### Qualifying Sessions
+
 ```bash
-python main.py --year 2025 --round 12 --refresh-data
+# Regular qualifying
+python main.py --year 2024 --round 8 --qualifying
+
+# Sprint qualifying
+python main.py --year 2024 --round 11 --qualifying --sprint
 ```
 
-### Search Round Numbers (including Sprints)
+### Finding Races
 
-To find the round number for a specific Grand Prix event, you can use the `--list-rounds` flag along with the year to return a list of events and their corresponding round numbers:
 ```bash
-python main.py --year 2025 --list-rounds
+# List all rounds
+python main.py --year 2024 --list-rounds
+
+# List only sprint weekends
+python main.py --year 2024 --list-sprints
 ```
 
-To return a list of events that include Sprint sessions, use the `--list-sprints` flag:
-```bash
-python main.py --year 2025 --list-sprints
-```
+## ⌨️ Controls
 
-### Qualifying Session Replay
+### Keyboard Shortcuts
+| Key | Action |
+|-----|--------|
+| `SPACE` | Pause/Resume |
+| `←` | Rewind 5 seconds |
+| `→` | Fast forward 5 seconds |
+| `↑` | Increase playback speed |
+| `↓` | Decrease playback speed |
+| `1` | Set speed to 0.5x |
+| `2` | Set speed to 1.0x |
+| `3` | Set speed to 2.0x |
+| `4` | Set speed to 4.0x |
 
-To run a Qualifying session replay, use the `--qualifying` flag:
-```bash
-python main.py --year 2025 --round 12 --qualifying
-```
+### Mouse Controls
+- **Click driver** in leaderboard → View their telemetry
+- **Click buttons** → Control playback
+- **Click again** → Deselect driver
 
-To run a Sprint Qualifying session (if the event has one), add `--sprint`:
-```bash
-python main.py --year 2025 --round 12 --qualifying --sprint
-```
+## 🎯 Use Cases
+
+### 📚 For Learning
+- Study racing lines through specific corners
+- Understand tire strategy impacts
+- See how top drivers manage DRS zones
+- Compare braking points between drivers
+
+### 🔬 For Analysis
+- Identify where lap time is gained/lost
+- Analyze overtaking opportunities
+- Study stint management
+- Compare qualifying performances
+
+### 🎮 For Fun
+- Relive epic battles in slow motion
+- Watch an entire season's highlights
+- Create your own race commentary
+- Spot incidents you missed live
+
+### 🏫 For Education
+- Teaching tool for racing schools
+- Understanding F1 strategy
+- Data visualization demonstrations
+- Sports analytics projects
+
+## 🛠️ Tech Stack
+
+- **[FastF1](https://github.com/theOehrly/Fast-F1)** - Official F1 telemetry data
+- **[Arcade](https://api.arcade.academy/)** - High-performance graphics
+- **NumPy & Pandas** - Data processing
+- **Python 3.8+** - Core language
+  
 
 ## File Structure
 
@@ -109,16 +230,6 @@ f1-race-replay/
 - Change track width, colors, and UI layout in `src/arcade_replay.py`.
 - Adjust telemetry processing in `src/f1_data.py`.
 
-## Contributing
-
-There have been serveral contributions from the community that have helped enhance this project. I have added a [contributors.md](./contributors.md) file to acknowledge those who have contributed features and improvements.
-
-If you would like to contribute, feel free to:
-
-- Open pull requests for UI improvements or new features.
-- Report issues on GitHub.
-
-Please see [roadmap.md](./roadmap.md) for planned features and project vision.
 
 # Known Issues
 
@@ -126,11 +237,20 @@ Please see [roadmap.md](./roadmap.md) for planned features and project vision.
 
 ## 📝 License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## ⚠️ Disclaimer
 
-No copyright infringement intended. Formula 1 and related trademarks are the property of their respective owners. All data used is sourced from publicly available APIs and is used for educational and non-commercial purposes only.
+This is a fan-made educational project. Formula 1, F1, and related trademarks are property of Formula One Licensing BV. All data is sourced from publicly available APIs and used for educational and non-commercial purposes only.
 
----
+## 🙏 Acknowledgments
+
+- **[FastF1](https://github.com/theOehrly/Fast-F1)** - For making F1 data accessible
+- **F1 Community** - For the passion that drives projects like this
+
+## 📬 Contact
+
+**Prajwal Koundinya**
+- GitHub: [@Prajwal-koundinya](https://github.com/Prajwal-koundinya)
+- Project Link: [f1-visualization](https://github.com/Prajwal-koundinya/f1-visualization)
 
